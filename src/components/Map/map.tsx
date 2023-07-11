@@ -380,58 +380,66 @@ const calculateBoundingBox = (dataLayer) => {
         for (const polygon of coordinates) {
           for (const ring of polygon) {
             for (const [lng, lat] of ring) {
-              if(!isNaN(lat) && !isNaN(lng) && lat !== null && lng !== null){
-              minLat = Math.min(lat, minLat)
-              maxLat = Math.max(lat, maxLat)
-              minLng = Math.min(lng, minLng)
-              maxLng = Math.max(lng, maxLng)
-            }}
+              if (!isNaN(lat) && !isNaN(lng) && lat !== null && lng !== null) {
+                minLat = Math.min(lat, minLat)
+                maxLat = Math.max(lat, maxLat)
+                minLng = Math.min(lng, minLng)
+                maxLng = Math.max(lng, maxLng)
+              }
+            }
           }
         }
       } else if (feature.geometry.type === 'LineString') {
         for (const [lng, lat] of coordinates) {
-          if(!isNaN(lat) && !isNaN(lng) && lat !== null && lng !== null){
-          minLat = Math.min(lat, minLat)
-          maxLat = Math.max(lat, maxLat)
-          minLng = Math.min(lng, minLng)
-          maxLng = Math.max(lng, maxLng)
-        }}
-        } else if (feature.geometry.type === 'MultiPoint') {
+          if (!isNaN(lat) && !isNaN(lng) && lat !== null && lng !== null) {
+            minLat = Math.min(lat, minLat)
+            maxLat = Math.max(lat, maxLat)
+            minLng = Math.min(lng, minLng)
+            maxLng = Math.max(lng, maxLng)
+          }
+        }
+      } else if (feature.geometry.type === 'MultiPoint') {
         for (const [lng, lat] of coordinates) {
-          if(!isNaN(lat) && !isNaN(lng) && lat !== null && lng !== null){
-          minLat = Math.min(lat, minLat)
-          maxLat = Math.max(lat, maxLat)
-          minLng = Math.min(lng, minLng)
-          maxLng = Math.max(lng, maxLng)
-        }}
+          if (!isNaN(lat) && !isNaN(lng) && lat !== null && lng !== null) {
+            minLat = Math.min(lat, minLat)
+            maxLat = Math.max(lat, maxLat)
+            minLng = Math.min(lng, minLng)
+            maxLng = Math.max(lng, maxLng)
+          }
+        }
       } else if (feature.geometry.type === 'Point') {
         const [lng, lat] = coordinates
-        if(!isNaN(lat) && !isNaN(lng) && lat !== null && lng !== null){
-        minLat = Math.min(lat, minLat)
-        maxLat = Math.max(lat, maxLat)
-        minLng = Math.min(lng, minLng)
-        maxLng = Math.max(lng, maxLng)
-      }
+        if (!isNaN(lat) && !isNaN(lng) && lat !== null && lng !== null) {
+          minLat = Math.min(lat, minLat)
+          maxLat = Math.max(lat, maxLat)
+          minLng = Math.min(lng, minLng)
+          maxLng = Math.max(lng, maxLng)
+        }
       }
     }
   }
   console.log('minLat', minLat)
-  if (minLat === Infinity || minLng === Infinity || maxLat === -Infinity || maxLng === -Infinity){
-    const maxLat = 48.768392;
-    const maxLng = 11.437463;
-    const minLat = 48.763212;
-    const minLng = 11.252714;
+  if (
+    minLat === Infinity ||
+    minLng === Infinity ||
+    maxLat === -Infinity ||
+    maxLng === -Infinity
+  ) {
+    const maxLat = 48.768392
+    const maxLng = 11.437463
+    const minLat = 48.763212
+    const minLng = 11.252714
     return [
       [minLat, minLng],
-      [maxLat, minLng]
+      [maxLat, maxLng]
     ]
-    } else{      
-      return [
-        [minLat, minLng],
-        [maxLat, maxLng]
-      ]
-    }
-    }
+  } else {
+    return [
+      [minLat, minLng],
+      [maxLat, maxLng]
+    ]
+  }
+}
 
 // code to calculate the zoom level .
 const calculateZoom = (bounds, mapDim) => {
@@ -472,39 +480,59 @@ const Map = ({ dataLayer, datasetwithgeojson }) => {
         if (feature.geometry.type === 'Polygon') {
           for (const polygon of feature.geometry.coordinates) {
             for (const [longitude, latitude] of polygon) {
-              if(!isNaN(latitude) && !isNaN(longitude) && latitude !== null && longitude !== null){
-              minLat = Math.min(latitude, minLat)
-              maxLat = Math.max(latitude, maxLat)
-              minLng = Math.min(longitude, minLng)
-              maxLng = Math.max(longitude, maxLng)
-            } 
+              if (
+                !isNaN(latitude) &&
+                !isNaN(longitude) &&
+                latitude !== null &&
+                longitude !== null
+              ) {
+                minLat = Math.min(latitude, minLat)
+                maxLat = Math.max(latitude, maxLat)
+                minLng = Math.min(longitude, minLng)
+                maxLng = Math.max(longitude, maxLng)
+              }
             }
           }
         } else if (feature.geometry.type === 'MultiPoint') {
           for (const [longitude, latitude] of feature.geometry.coordinates) {
-            if(!isNaN(latitude) && !isNaN(longitude) && latitude !== null && longitude !== null){
+            if (
+              !isNaN(latitude) &&
+              !isNaN(longitude) &&
+              latitude !== null &&
+              longitude !== null
+            ) {
+              minLat = Math.min(latitude, minLat)
+              maxLat = Math.max(latitude, maxLat)
+              minLng = Math.min(longitude, minLng)
+              maxLng = Math.max(longitude, maxLng)
+            }
+          }
+        } else if (feature.geometry.type === 'Point') {
+          const [longitude, latitude] = feature.geometry.coordinates
+          if (
+            !isNaN(latitude) &&
+            !isNaN(longitude) &&
+            latitude !== null &&
+            longitude !== null
+          ) {
             minLat = Math.min(latitude, minLat)
             maxLat = Math.max(latitude, maxLat)
             minLng = Math.min(longitude, minLng)
             maxLng = Math.max(longitude, maxLng)
           }
-        }
-        } else if (feature.geometry.type === 'Point') {
-          const [longitude, latitude] = feature.geometry.coordinates
-          if(!isNaN(latitude) && !isNaN(longitude) && latitude !== null && longitude !== null){
-          minLat = Math.min(latitude, minLat)
-          maxLat = Math.max(latitude, maxLat)
-          minLng = Math.min(longitude, minLng)
-          maxLng = Math.max(longitude, maxLng)
-        } 
         } else if (feature.geometry.type === 'LineString') {
           for (const [longitude, latitude] of feature.geometry.coordinates) {
-            if(!isNaN(latitude) && !isNaN(longitude) && latitude !== null && longitude !== null){
-            minLat = Math.min(latitude, minLat)
-            maxLat = Math.max(latitude, maxLat)
-            minLng = Math.min(longitude, minLng)
-            maxLng = Math.max(longitude, maxLng)
-          }   
+            if (
+              !isNaN(latitude) &&
+              !isNaN(longitude) &&
+              latitude !== null &&
+              longitude !== null
+            ) {
+              minLat = Math.min(latitude, minLat)
+              maxLat = Math.max(latitude, maxLat)
+              minLng = Math.min(longitude, minLng)
+              maxLng = Math.max(longitude, maxLng)
+            }
           }
         }
       }
@@ -513,9 +541,14 @@ const Map = ({ dataLayer, datasetwithgeojson }) => {
     const meanLat = (minLat + maxLat) / 2
     const meanLng = (minLng + maxLng) / 2
 
-    if (!isNaN(meanLat) && !isNaN(meanLng) && meanLat !== null && meanLng !== null){
+    if (
+      !isNaN(meanLat) &&
+      !isNaN(meanLng) &&
+      meanLat !== null &&
+      meanLng !== null
+    ) {
       return [meanLat, meanLng]
-    } else{
+    } else {
       const meanLat = 48.76486675817808
       const meanLng = 11.434353590011597
       return [meanLat, meanLng]
@@ -570,13 +603,13 @@ const Map = ({ dataLayer, datasetwithgeojson }) => {
       scrollWheelZoom={true}
       style={{ height: 400, width: '100%', zIndex: 0 }}
     >
-       {itemList.map((coord, index) => (
+      {itemList.map((coord, index) => (
         // eslint-disable-next-line react/jsx-key
         <Marker
-        position={[
-          coord.props.data.features[0].geometry.coordinates[1][1],
-          coord.props.data.features[0].geometry.coordinates[1][0]
-        ]}
+          position={[
+            coord.props.data.features[0].geometry.coordinates[1][1],
+            coord.props.data.features[0].geometry.coordinates[1][0]
+          ]}
           eventHandlers={{ click: createClickHandler(index) }}
           icon={greenIcon}
         ></Marker>
