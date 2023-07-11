@@ -426,7 +426,7 @@ const calculateBoundingBox = (dataLayer) => {
     maxLng === -Infinity
   ) {
     const maxLat = 48.768392
-    const maxLng = 11.437463
+    const maxLng = 11.252714
     const minLat = 48.763212
     const minLng = 11.252714
     return [
