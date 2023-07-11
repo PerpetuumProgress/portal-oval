@@ -135,7 +135,7 @@ export default function SearchPage({
   )
   useEffect(() => {
     if (!parsed || !queryResult) return
-    const { page } = parsed
+    const { page } = parsed   
     if (queryResult.totalPages < Number(page)) updatePage(1)
   }, [parsed, queryResult, updatePage])
 
